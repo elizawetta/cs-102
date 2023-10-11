@@ -6,49 +6,58 @@ def is_number(num):
     return num.replace("-", "").replace(".", "").isdigit()
 
 
-print("Калькулятор работает только с целыми числами и операциями -+*/")
-print("Пример ввода:\n1-8*17+13\nВывод: -122")
+def calc(str_):
+    """Calculator function"""
+    str_ = str_.replace(" ", "").replace("--", "+").replace("++", "+")
+    if (
+        str_.count("/+")
+        + str_.count("*+")
+        + str_.count("*/")
+        + str_.count("/*")
+        + str_.count("+/")
+        + str_.count("+*")
+    ):
+        return "ERROR"
+    str_ = str_.replace("+", " + ").replace("-", " - ").replace("/", " / ").replace("*", " * ")
+    str_ = str_.replace("/  - ", "/ -").replace("*  - ", "* -").replace("+  - ", "+ -")
+    if str_[0:2] in [" -", " +"]:
+        str_ = "0" + str_
 
-S = input().replace(" ", "").replace("--", "+").replace("++", "+")
-if S.count("/+") + S.count("*+") + S.count("*/") + S.count("/*") + S.count("+/") + S.count("+*"):
-    S = "-"
-S = S.replace("+", " + ").replace("-", " - ").replace("/", " / ").replace("*", " * ")
-S = S.replace("/  - ", "/ -").replace("*  - ", "* -").replace("+  - ", "+ -")
-if S[0:2] in [" -", " +"]:
-    S = "0" + S
+    str_ = str_.split()
 
-S = S.split()
-d = [S[0]]
-if not all(map(lambda x: (x in "-+*/" or is_number(x)), S)):
-    S, d = [], []
-elif S[-1] in "*-+/" or S[0] in "-+" or len(S) == 0:
-    S, d = [], []
-for i in S[1:]:
-    if i in "+-*/":
-        d.append(i)
-    elif is_number(i) and d[-1] in "+-":
-        d.append(i)
-    elif is_number(i) and d[-1] in "*" and is_number(d[-2]):
-        del d[-1]
-        d[-1] = str(float(d[-1]) * int(i))
-    elif is_number(i) and d[-1] in "/" and is_number(d[-2]):
-        if int(i) == 0:
-            print("ERROR")
-            break
-        del d[-1]
-        d[-1] = str(float(d[-1]) / int(i))
-    else:
-        print("ERROR")
-        break
-else:
-    if len(d) == 0:
-        print("ERROR")
-    else:
-        d = ("".join(d)
-            .replace("-+", "-")
-            .replace("--", "+")
-            .replace("-", " -")
-            .replace("+", " ")
-            .split()
-        )
-        print(sum(map(float, d)))
+    if not all(map(lambda x: (x in "-+*/" or is_number(x)), str_)):
+        return "ERROR"
+    if len(str_) == 0 or str_[-1] in "*-+/" or str_[0] in "-+":
+        return "ERROR"
+
+    lst = [str_[0]]
+    for i in str_[1:]:
+        if i in "+-*/":
+            lst.append(i)
+        elif is_number(i) and lst[-1] in "+-":
+            lst.append(i)
+        elif is_number(i) and lst[-1] in "*" and is_number(lst[-2]):
+            del lst[-1]
+            lst[-1] = str(float(lst[-1]) * float(i))
+        elif is_number(i) and lst[-1] in "/" and is_number(lst[-2]):
+            if int(i) == 0:
+                return "ERROR"
+            del lst[-1]
+            lst[-1] = str(float(lst[-1]) / float(i))
+        else:
+            return "ERROR"
+    lst = (
+        "".join(lst)
+        .replace("-+", "-")
+        .replace("--", "+")
+        .replace("-", " -")
+        .replace("+", " ")
+        .split()
+    )
+    return sum(map(float, lst))
+
+
+if __name__ == "__main__":
+    print("Калькулятор работает с операциями -+*/")
+    print("Пример ввода:\n1-8*17+13\nВывод: -122")
+    print(calc(input()))
