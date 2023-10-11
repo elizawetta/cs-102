@@ -36,14 +36,14 @@ def decrypt_caesar(ciphertext: str, shift: int = 3) -> str:
     ''
     """
     plaintext = ""
-    # shift %= 26
-    # for i in ciphertext:
-    #     if i.isalpha() and i.islower():
-    #         plaintext += chr(ord('a') + (ord(i) - ord('a') - shift) % 26)
-    #     elif i.isalpha() and i.isupper():
-    #         plaintext += chr(ord('A') + (ord(i) - ord('A') - shift) % 26)
-    #     else:
-    #         plaintext += i
+    shift %= 26
+    for i in ciphertext:
+        if i.isalpha() and i.islower():
+            plaintext += chr(ord('a') + (ord(i) - ord('a') - shift) % 26)
+        elif i.isalpha() and i.isupper():
+            plaintext += chr(ord('A') + (ord(i) - ord('A') - shift) % 26)
+        else:
+            plaintext += i
     return plaintext
 
 
