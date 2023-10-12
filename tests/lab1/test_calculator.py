@@ -31,7 +31,7 @@ class CalculatorTestCase(unittest.TestCase):
         self.assertEqual(calc('17 + 1 / 0'), 'ERROR')
 
     def test_9(self):
-        self.assertEqual(calc('10 + 0  '), '10')
+        self.assertEqual(calc('10 + 0  '), 10)
 
     def test_10(self):
         self.assertEqual(calc(' '), 'ERROR')
