@@ -1,11 +1,11 @@
 import unittest
 
-"""Testing tasks lab2"""
+"""Testing Caesar Cipher"""
 import unittest
 from src.lab2.caesar import encrypt_caesar, decrypt_caesar
 
 
-class CalculatorTestCase(unittest.TestCase):
+class CaesarTestCase(unittest.TestCase):
     def test_encrypt_default_shift(self):
         self.assertEqual(encrypt_caesar('PYTHON'), 'SBWKRQ')
 
@@ -16,10 +16,10 @@ class CalculatorTestCase(unittest.TestCase):
         self.assertEqual(encrypt_caesar('', 10), '')
 
     def test_encrypt_big_shift(self):
-        self.assertEqual(encrypt_caesar('Caesar shifr the best', 378), 'Qosgof gvwtf hvs psgh')
+        self.assertEqual(encrypt_caesar('Caesar cipher the best', 378), 'Qosgof qwdvsf hvs psgh')
 
     def test_encrypt_negative_shift(self):
-        self.assertEqual(encrypt_caesar('Caesar shifr the best', -1), 'Bzdrzq rgheq sgd adrs')
+        self.assertEqual(encrypt_caesar('Caesar cipher the best', -1), 'Bzdrzq bhogdq sgd adrs')
 
     def test_decrypt_default_shift(self):
         self.assertEqual(decrypt_caesar('SBWKRQ'), 'PYTHON')
@@ -31,13 +31,10 @@ class CalculatorTestCase(unittest.TestCase):
         self.assertEqual(decrypt_caesar('', 10), '')
 
     def test_decrypt_big_shift(self):
-        self.assertEqual(decrypt_caesar('Qosgof gvwtf hvs psgh', 378), 'Caesar shifr the best')
+        self.assertEqual(decrypt_caesar('Qosgof qwdvsf hvs psgh', 378), 'Caesar cipher the best')
 
     def test_decrypt_negative_shift(self):
-        self.assertEqual(decrypt_caesar('Bzdrzq rgheq sgd adrs', -1), 'Caesar shifr the best')
-
-
-
+        self.assertEqual(decrypt_caesar('Bzdrzq bhogdq sgd adrs', -1), 'Caesar cipher the best')
 
 
 if __name__ == '__main__':
