@@ -4,6 +4,7 @@ import typing as tp
 
 def is_prime(n: int) -> bool:
     """
+    Input: n - number to check 
     Tests to see if a number is prime.
     >>> is_prime(2)
     True
@@ -24,6 +25,8 @@ def is_prime(n: int) -> bool:
 
 def gcd(a: int, b: int) -> int:
     """
+    Input: a, b - numbers 
+    Output: greatest common divisor a and b
     Euclid's algorithm for determining the greatest common divisor.
     >>> gcd(12, 15)
     3
@@ -38,6 +41,11 @@ def gcd(a: int, b: int) -> int:
 
 def multiplicative_inverse(e: int, phi: int) -> int:
     """
+    Input: 
+    e - prime number
+    phi - Euler function 
+    Output: result of multiplicative inverse e and phi
+    
     Euclid's extended algorithm for finding the multiplicative
     inverse of two numbers.
     >>> multiplicative_inverse(7, 40)
@@ -57,6 +65,12 @@ def multiplicative_inverse(e: int, phi: int) -> int:
 
 
 def generate_keypair(p: int, q: int) -> tp.Tuple[tp.Tuple[int, int], tp.Tuple[int, int]]:
+    '''
+    Input: p, q - prime numbers
+    Output: tuple of public key and  private key
+    
+    Generating keypair
+    '''
     if not (is_prime(p) and is_prime(q)):
         raise ValueError("Both numbers must be prime.")
     elif p == q:
@@ -84,6 +98,12 @@ def generate_keypair(p: int, q: int) -> tp.Tuple[tp.Tuple[int, int], tp.Tuple[in
 
 
 def encrypt(pk: tp.Tuple[int, int], plaintext: str) -> tp.List[int]:
+    '''
+    Input: pk - private key, plaintext - text to encryption
+    Output: cipher - encrypted text
+    
+    Encryption function
+    '''
     # Unpack the key into it's components
     key, n = pk
     # Convert each letter in the plaintext to numbers based on
@@ -94,6 +114,13 @@ def encrypt(pk: tp.Tuple[int, int], plaintext: str) -> tp.List[int]:
 
 
 def decrypt(pk: tp.Tuple[int, int], ciphertext: tp.List[int]) -> str:
+    '''
+    Input: pk - public key, plaintext - text to decryption
+    Output: cipher - decrypted text
+
+    Decryption function
+    '''
+    
     # Unpack the key into its components
     key, n = pk
     # Generate the plaintext based on the ciphertext and key using a^b mod m
