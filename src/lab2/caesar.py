@@ -1,5 +1,12 @@
 def encrypt_caesar(plaintext: str, shift: int = 3) -> str:
     """
+    Input: 
+    plaintext - text to encryption
+    shift - shift
+    
+    Output:
+    ciphertext - encrypted text
+    
     Encrypts plaintext using a Caesar cipher.
     >>> encrypt_caesar("PYTHON")
     'SBWKRQ'
@@ -25,6 +32,13 @@ def encrypt_caesar(plaintext: str, shift: int = 3) -> str:
 
 def decrypt_caesar(ciphertext: str, shift: int = 3) -> str:
     """
+    Input: 
+    ciphertext - text to decryption
+    shift - shift
+    
+    Output:
+    plaintext - decrypted text
+    
     Decrypts a ciphertext using a Caesar cipher.
     >>> decrypt_caesar("SBWKRQ")
     'PYTHON'
