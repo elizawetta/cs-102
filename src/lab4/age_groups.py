@@ -19,7 +19,7 @@ class Groups:
 
     def get_names(self, group):
         ans = []
-        for i in group:
+        for i in sorted(group, key=lambda x: (-x[1], x[0])):
             ans.append(i[0] + f" ({i[1]})")
         return ', '.join(ans)
 
