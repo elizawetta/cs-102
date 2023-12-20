@@ -15,25 +15,28 @@ from collections import Counter
 
 
 class User:
-    def __init__(self, films):
-        self.films = list(map(int, films.split(',')))
+    """Класс пользователя, который смотрит фильмы"""
+    def __init__(self, films: list):
+        self.films = films
         self.count = len(self.films)
 
-    def add_film(self, film):
+    def add_film(self, film: int):
+        """Добавить фильм, который пользователь уже посмотрел"""
         self.films.append(film)
         self.count += 1
 
 
 
+
 class Reco:
-    def __init__(self, films_path, users_path):
-        with open(films_path) as file:
-            self.films = {int(i[0]): i[1] for i in map(lambda x: x.strip().split(','), file.readlines())}
-        with open(users_path) as file:
-            self.users = list(map(lambda x: list(map(int, x.split(','))), file.readlines()))
+    """Рекомендательная система"""
+    def __init__(self, films: dict, users: list):
+        self.films = films
+        self.users = users
         self.count_films = Counter(sum(self.users, []))
 
     def get_films(self, user: User):
+        """Получить id фильмов, которы наиболее совпадают с просмотренными фильмами пользователя"""
         all_films = []
         for i in self.users:
             lst = [j for j in i if j not in user.films]
@@ -42,6 +45,7 @@ class Reco:
         return set(all_films)
 
     def get_one_film(self, user: User):
+        """Посчитать фильм для пользователя на основе просмотренных фильмов"""
         lst = self.get_films(user)
         max_raiting = (-1, -1)
         for i in lst:
@@ -49,10 +53,15 @@ class Reco:
                 max_raiting = (self.count_films[i], i)
         return self.films[max_raiting[1]]
 
-
-films_path = 'films.txt'
-users_path = 'users.txt'
-films_id = input()
-user = User(films_id)
-reco = Reco(films_path, users_path)
-print(reco.get_one_film(user))
+if __name__ == "__main__":
+    films_path = 'films.txt'
+    users_path = 'users.txt'
+    films_id = input()
+    with open(films_path) as file:
+        films = {int(i[0]): i[1] for i in map(lambda x: x.strip().split(','), file.readlines())}
+    with open(users_path) as file:
+        users = list(map(lambda x: list(map(int, x.split(','))), file.readlines()))
+    user = User(list(map(int, films_id.split(','))))
+    reco = Reco(films, users)
+    print(reco.get_films(user))
+    print(reco.get_one_film(user))
